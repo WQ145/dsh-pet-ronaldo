@@ -6,10 +6,10 @@
   "type": "module",
   "main": "host.js",
   "license": "MIT",
-  "author": "",
+  "author": "WQ145",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourname/dsh-ronaldo-pet.git"
+    "url": "git+https://github.com/WQ145/dsh-pet-ronaldo.git"
   },
   "exports": {
     ".": "./host.js",
