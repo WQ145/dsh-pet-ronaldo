@@ -57,7 +57,7 @@ return {
     const DIVE_PHRASES = ['Penalty kick! ⚽', '给我点球！Penalty!', '点球！裁判！']
 
     let state = {
-      pets: [ { id: 'p1', name: 'C罗', size: 120, visible: true, pos: null, behavior: 'idle', sheet: { uri: null, cols: 8, rows: 11, cellW: 192, cellH: 208 }, states: CODE_STATES } ],
+      pets: [ { id: 'p1', name: 'C罗', size: 120, visible: true, pos: null, behavior: 'look', sheet: { uri: null, cols: 8, rows: 11, cellW: 192, cellH: 208 }, states: CODE_STATES } ],
       hostMode: 'idle',
     }
     let nextId = 2
