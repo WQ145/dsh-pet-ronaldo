@@ -43,9 +43,15 @@ return {
     }
     const BEHAVIOR_OPTIONS = [
       { value: 'idle', label: '😌 待机' },
+      { value: 'runRight', label: '🏃 右跑运球' },
+      { value: 'runLeft', label: '🏃 左跑运球' },
       { value: 'waving', label: '👋 挥手' },
+      { value: 'jumping', label: '🎉 SIU 跳跃' },
+      { value: 'failed', label: '😵 摔倒' },
+      { value: 'waiting', label: '⏳ 等待' },
       { value: 'running', label: '⚽ 颠球' },
       { value: 'review', label: '🤔 思考' },
+      { value: 'look', label: '👀 注视' },
     ]
     const PHRASES = ['SIUUUUU! 🎉', '进球啦！⚽', '完美的终结！', 'Vamos!', '这就是 7 号！']
     const DIVE_PHRASES = ['Penalty kick! ⚽', '给我点球！Penalty!', '点球！裁判！']
