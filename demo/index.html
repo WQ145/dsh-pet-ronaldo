@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C罗桌宠 · 动画预览</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(160deg, #1b1b2f, #16213e); color: #eaeaea;
+  }
+  #stage { position: relative; width: 100vw; height: 70vh; }
+  #pet {
+    position: absolute; right: 60px; bottom: 40px;
+    width: 144px; height: 156px;
+    background-image: url('../assets/spritesheet.webp');
+    background-size: 1152px 1716px;
+    background-repeat: no-repeat;
+    cursor: grab; user-select: none; touch-action: none;
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,.4));
+  }
+  #pet:active { cursor: grabbing; }
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  button {
+    padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,.2);
+    background: rgba(255,255,255,.08); color: #eaeaea; font-size: 14px; cursor: pointer;
+  }
+  button.active { background: #4f6ef7; border-color: transparent; }
+  .hint { font-size: 13px; opacity: .6; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="pet"></div></div>
+<div class="controls" id="controls"></div>
+<div class="hint">拖动 C罗移动 · 点击按钮切换动画 · 每行一状态（8 列 × 11 行契约）</div>
+
+<script>
+const CW = 192, CH = 208, SCALE = 0.75;
+const W = CW * SCALE, H = CH * SCALE;
+const STATES = {
+  idle: { row: 0, frames: 6, fps: 6 },
+  runRight: { row: 1, frames: 8, fps: 12 },
+  runLeft: { row: 2, frames: 8, fps: 12 },
+  waving: { row: 3, frames: 4, fps: 8 },
+  jumping: { row: 4, frames: 5, fps: 10 },
+  failed: { row: 5, frames: 8, fps: 12 },
+  waiting: { row: 6, frames: 6, fps: 5 },
+  running: { row: 7, frames: 6, fps: 12 },
+  review: { row: 8, frames: 6, fps: 6 },
+};
+const pet = document.getElementById('pet');
+const controls = document.getElementById('controls');
+let current = 'idle';
+let timer = null;
+
+function setFrame(state, frame) {
+  const s = STATES[state];
+  pet.style.backgroundPosition = (-(frame % s.frames) * W) + 'px ' + (-s.row * H) + 'px';
+}
+function play(state) {
+  current = state;
+  clearInterval(timer);
+  const s = STATES[state];
+  let f = 0;
+  setFrame(state, 0);
+  timer = setInterval(() => { f = (f + 1) % s.frames; setFrame(state, f); }, 1000 / s.fps);
+  document.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.s === state));
+}
+Object.keys(STATES).forEach(s => {
+  const b = document.createElement('button');
+  b.textContent = s; b.dataset.s = s; b.onclick = () => play(s);
+  if (s === 'idle') b.classList.add('active');
+  controls.appendChild(b);
+});
+
+// 拖动
+let drag = null;
+pet.addEventListener('pointerdown', (e) => {
+  drag = { x: e.clientX, y: e.clientY, left: pet.offsetLeft, top: pet.offsetTop };
+  pet.setPointerCapture(e.pointerId);
+});
+pet.addEventListener('pointermove', (e) => {
+  if (!drag) return;
+  const dx = e.clientX - drag.x;
+  if (Math.abs(dx) > 4) play(dx > 0 ? 'runRight' : 'runLeft');
+  pet.style.left = (drag.left + dx) + 'px';
+  pet.style.top = (drag.top + (e.clientY - drag.y)) + 'px';
+  pet.style.right = 'auto'; pet.style.bottom = 'auto';
+});
+pet.addEventListener('pointerup', (e) => { drag = null; play('idle'); });
+
+play('idle');
+</script>
+</body>
+</html>

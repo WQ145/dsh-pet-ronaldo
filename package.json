@@ -1,0 +1,40 @@
+{
+  "name": "dsh-ronaldo-pet",
+  "version": "1.0.0",
+  "private": false,
+  "description": "C罗桌宠 — DeepSeek Harness 桌面宠物插件。葡萄牙 7 号 chibi 吉祥物，随 Agent 工作状态切换动作，对话完成时跳起 SIU 庆祝并播放提示音，失败时戏剧性摔倒；支持导入自定义 spritesheet 精灵图统一管理多只宠物。",
+  "type": "module",
+  "main": "host.js",
+  "license": "MIT",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourname/dsh-ronaldo-pet.git"
+  },
+  "exports": {
+    ".": "./host.js",
+    "./client": "./client/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime"
+      ],
+      "platform": "web"
+    }
+  },
+  "files": [
+    "host.js",
+    "client",
+    "cordis.patch.yml",
+    "assets",
+    "scripts",
+    "docs",
+    "demo"
+  ]
+}

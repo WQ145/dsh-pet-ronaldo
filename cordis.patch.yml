@@ -1,0 +1,4 @@
+# dsh bundle patch: inserts the Ronaldo desktop-pet plugin into the profile.
+- insert:
+    - id: ronaldo-pet
+      name: 'dsh-ronaldo-pet'
